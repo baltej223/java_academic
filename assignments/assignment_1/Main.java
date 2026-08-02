@@ -6,9 +6,12 @@ public class Main{
     q3(10);
     q4(20);
     q5(48, 18);
+    q6(21, 30);
     q7(3453);
     q8(124325);
     q9(2, 30);
+    q10(101);
+    q10(102);
   }
 
   public static void q1(int year) {
@@ -56,6 +59,18 @@ public class Main{
     }
   }
 
+  public static void q6(int a, int b){
+    int g = Math.max(a, b); 
+    int s = Math.min(a, b);
+
+    int ans = a*b;
+    for (int i = g; i <= a * b; i += g) {
+        if (i % s == 0)
+          ans = i;
+    }
+    System.out.println("LCM: "+ ans);
+  }
+
   public static void q7(int num) {
     int count = 0;
     while (true) {
@@ -68,33 +83,56 @@ public class Main{
     }
   }
 
-  public static void q8(int num) {
-    int rev = 0;
-    int power = 0;
+  public static int q8(int num) {
+    int rest = num;
     int digit;
-    while(true){
-      digit = num%10;
-      num /= 10;
-      power++;
-      if (num == 0) {
-        System.out.println("Reversed: " + rev);
+
+    int count = 0;
+    while(true) {
+      digit = rest%10;
+      rest = rest/10;
+      count++;
+      if (rest == 0) {
         break;
       }
     }
+
+    rest = num;
+    digit = 0;
+    int f = 0;
+    while(count>0) {
+      digit = rest%10;
+      rest = rest/10;
+      f += ( Math.pow(10, count-1) * digit );
+      
+      if (rest == 0) {
+        f = f+rest;
+        break;
+      }
+      count--;
+    }
+    System.out.println("Reversed:"+f);
+    return f;
   }
 
     public static void q9(int num, int pow) {
       if (num == 2) {
         System.out.println(1<<pow);
+        return;
       }
       int n = 1;
       for (int i=0; i<pow; i++) {
         n *= num; 
       }
-      System.out.println("");
       System.out.println(n);
     }
 
     public static void q10(int number) {
+      if (number == q8(number)) {
+        System.out.println("Palindrome!");
+      }
+      else {
+        System.out.println("Not palindrome!");
+      }
     }
 }
