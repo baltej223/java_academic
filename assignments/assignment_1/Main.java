@@ -1,17 +1,82 @@
 package assignment_1;
+import java.util.Scanner;
 
 public class Main{
-	public static void main(String[] args) {
-    q1(2024);
-    q3(10);
-    q4(20);
-    q5(48, 18);
-    q6(21, 30);
-    q7(3453);
-    q8(124325);
-    q9(2, 30);
-    q10(101);
-    q10(102);
+  public static void main(String[] args) {
+      Scanner s = new Scanner(System.in);
+
+      System.out.print("Which question (1-10)? ");
+      int q = s.nextInt();
+
+      switch (q) {
+          case 1:
+              System.out.print("Enter year: ");
+              int year = s.nextInt();
+              q1(year);
+              break;
+
+          case 2:
+              System.out.print("Enter Char: ");
+              char c = s.next().charAt(0);;
+              q2(c);
+              break;
+
+          case 3:
+              System.out.print("Enter number: ");
+              int n3 = s.nextInt();
+              q3(n3);
+              break;
+
+          case 4:
+              System.out.print("Enter number: ");
+              int n4 = s.nextInt();
+              q4(n4);
+              break;
+
+          case 5:
+              System.out.print("Enter two numbers: ");
+              int a = s.nextInt();
+              int b = s.nextInt();
+              q5(a, b);
+              break;
+
+          case 6:
+              System.out.print("Enter two numbers: ");
+              int x = s.nextInt();
+              int y = s.nextInt();
+              q6(x, y);
+              break;
+
+          case 7:
+              System.out.print("Enter number: ");
+              int n7 = s.nextInt();
+              q7(n7);
+              break;
+
+          case 8:
+              System.out.print("Enter number: ");
+              int n8 = s.nextInt();
+              q8(n8);
+              break;
+
+          case 9:
+              System.out.print("Enter base and power: ");
+              int base = s.nextInt();
+              int power = s.nextInt();
+              q9(base, power);
+              break;
+
+          case 10:
+              System.out.print("Enter number: ");
+              int n10 = s.nextInt();
+              q10(n10);
+              break;
+
+          default:
+              System.out.println("Invalid question number.");
+      }
+
+      s.close();
   }
 
   public static void q1(int year) {
@@ -22,7 +87,15 @@ public class Main{
       System.out.println("Not Leap!");
     }
 	}
-
+  
+  public static void q2(char x) {
+    if ((x>='a' && x<= 'z') || (x>'A' && x<'Z')) {
+      System.out.println("Char!");
+    }
+    else {
+      System.out.println("No Char!");
+    }
+  }
   public static void q3(int num) {
     int res = 1;
     for (int i=1; i<=num; i++) {
