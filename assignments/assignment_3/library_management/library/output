@@ -1,0 +1,145 @@
+===== DIRECTORY TREE =====
+.
+├── main
+│   └── Main.java
+├── model
+│   ├── Book.java
+│   ├── DigitalResource.java
+│   ├── LibraryResource.java
+│   └── Printable.java
+├── output
+├── service
+└── util
+
+5 directories, 6 files
+
+===== FILE CONTENTS =====
+
+----- FILE: ./model/LibraryResource.java -----
+package library.model;
+
+public abstract class LibraryResource {
+    private int resourceId;
+    private String title;
+    private String author;
+    private static String libraryName = "University Library";
+    private static int total_resources = 0;
+
+    public LibraryResource(int resourceId, String title, String author) {
+        this.resourceId = resourceId;
+        this.title = title;
+        this.author = author;
+        total_resources++;
+    }
+
+    public abstract double calculateFine(int overdueDays);
+
+    protected void printCommonDetails() {
+        System.out.println("Resource ID   : " + resourceId);
+        System.out.println("Title         : " + title);
+        System.out.println("Author        : " + author);
+        System.out.println("Library       : " + libraryName);
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public static int total_resources() {
+        return total_resources;
+    }
+
+    public static String getLibraryName() {
+        return libraryName;
+    }
+}
+
+----- FILE: ./model/Printable.java -----
+package library.model;
+
+public interface Printable {
+    void printDetails();
+}
+
+----- FILE: ./model/Book.java -----
+package library.model;
+
+public class Book extends LibraryResource implements Printable {
+    public Book(int resourceId, String title, String author) {
+        super(resourceId, title, author);
+    }
+
+    public double calculateFine(int overdueDays) {
+        return 5.0 * overdueDays;
+    }
+
+    public void printDetails() {
+        System.out.println("Resource Type : Book");
+        printCommonDetails();
+    }
+}
+
+----- FILE: ./model/DigitalResource.java -----
+package library.model;
+
+public class DigitalResource extends LibraryResource implements Printable {
+    public DigitalResource(int resourceId, String title, String author) {
+        super(resourceId, title, author);
+    }
+
+    public double calculateFine(int overdueDays) {
+        return 2.0 * overdueDays;
+    }
+
+    public void printDetails() {
+        System.out.println("Resource Type : Digital Resource");
+        printCommonDetails();
+    }
+}
+
+----- FILE: ./main/Main.java -----
+package library.main;
+
+import library.model.Book;
+import library.model.DigitalResource;
+import library.model.Journal;
+import library.model.LibraryResource;
+import library.model.Printable;
+import library.util.InputValidator;
+
+public class Main {
+    public static void main(String[] args) {
+        InputValidator validator = new InputValidator();
+        LibraryResource[] resources = new LibraryResource[5];
+
+        resources[0] = new Book(101, "Java Programming", "John Doe");
+        resources[1] = new DigitalResource(102, "Design Patterns", "Jane Smith");
+        resources[2] = new Book(103, "Data Structures", "Alice Johnson");
+        resources[3] = new DigitalResource(104, "Database Systems", "Bob Wilson");
+        resources[4] = new Journal(105, "Computer Science Review", "Charlie Brown");
+
+        System.out.println("========== LIBRARY RESOURCE DETAILS ==========");
+        double totalFine = 0;
+
+        for (LibraryResource resource : resources) {
+            resource.printDetails();
+            System.out.println("Overdue Fine  : Rs. " + resource.calculateFine(3));
+            System.out.println("----------------------------------------");
+            totalFine += resource.calculateFine(3);
+        }
+
+        System.out.println("========== TOTAL STATISTICS ==========");
+        System.out.println("Total Resources Created: " + LibraryResource.total_resources());
+        System.out.println("Total Fine for 3 days overdue: Rs. " + totalFine);
+        System.out.println("Library Name: " + LibraryResource.getLibraryName());
+    }
+}
+
